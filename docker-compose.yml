@@ -1,0 +1,17 @@
+services:
+  baby-monitor:
+    build: .
+    restart: unless-stopped
+    environment:
+      - CAMERA_URL=rtsp://user:pass@192.168.1.x:554/stream
+      - CAMERA_FALLBACK_URL=          # optional second camera
+      - THRESHOLD=-30                  # dBFS noise threshold (default: -30)
+      - TRIGGER_COUNT=2                # consecutive loud readings before alert
+      - SAMPLE_INTERVAL=2             # seconds between volume samples
+      - MQTT_HOST=192.168.1.x
+      - MQTT_PORT=1883
+      - MQTT_USER=your_mqtt_user
+      - MQTT_PASS=your_mqtt_password
+      - MQTT_TOPIC=home/baby_monitor/volume
+      - WEBHOOK_URL=http://homeassistant:8123/api/webhook/baby_noise_alert
+      - RETRY_DELAY=5
